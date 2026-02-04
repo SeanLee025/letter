@@ -7,12 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body {
             font-family: 'Noto Serif SC', serif;
@@ -43,361 +38,237 @@
             pointer-events: none;
             transform: translateY(100%) scale(0.9);
             transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
-            padding: 60px 20px 20px;
-            overflow-y: auto;
-            overflow-x: hidden;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 50px 20px 20px;
+            overflow: hidden;
         }
         
-        .slide.active {
-            opacity: 1;
-            pointer-events: all;
-            transform: translateY(0) scale(1);
-            z-index: 10;
-        }
-        
-        .slide.prev {
-            opacity: 0;
-            transform: translateY(-100%) scale(1.1);
-            z-index: 5;
-        }
+        .slide.active { opacity: 1; pointer-events: all; transform: translateY(0) scale(1); z-index: 10; }
+        .slide.prev { opacity: 0; transform: translateY(-100%) scale(1.1); z-index: 5; }
         
         /* 各页背景 */
         .slide:nth-child(1) { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
         .slide:nth-child(2) { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
         .slide:nth-child(3) { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); }
         .slide:nth-child(4) { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
-        .slide:nth-child(5) { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); } /* 高频词汇页暖色调 */
+        .slide:nth-child(5) { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
         .slide:nth-child(6) { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
         .slide:nth-child(7) { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
         .slide:nth-child(8) { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .slide:nth-child(9) { background: linear-gradient(135deg, #2c3e50 0%, #4ca1af 100%); }
         
         .title-main {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 700;
             color: white;
             text-align: center;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             text-shadow: 0 2px 10px rgba(0,0,0,0.2);
             opacity: 0;
             transform: translateY(30px);
             font-family: 'Ma Shan Zheng', cursive;
         }
         
-        .active .title-main {
-            animation: fadeInUp 0.8s forwards;
-        }
+        .active .title-main { animation: fadeInUp 0.8s forwards; }
+        .subtitle { font-size: 13px; color: rgba(255,255,255,0.95); text-align: center; line-height: 1.5; max-width: 90%; opacity: 0; transform: translateY(20px); margin-bottom: 15px; }
+        .active .subtitle { animation: fadeInUp 0.8s 0.2s forwards; }
         
-        .subtitle {
-            font-size: 14px;
-            color: rgba(255,255,255,0.95);
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        
+        /* 异形照片贴纸 */
+        .sticker {
+            position: absolute;
+            background: rgba(255,255,255,0.95);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 11px;
             text-align: center;
-            line-height: 1.6;
-            max-width: 90%;
-            opacity: 0;
-            transform: translateY(20px);
-            margin-bottom: 20px;
+            transition: transform 0.3s;
+            z-index: 20;
         }
         
-        .active .subtitle {
-            animation: fadeInUp 0.8s 0.2s forwards;
+        .sticker.circle { border-radius: 50%; width: 80px; height: 80px; }
+        .sticker.oval { border-radius: 50%; width: 100px; height: 70px; }
+        .sticker.wave { 
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; 
+            width: 90px; height: 90px; 
+            animation: morph 8s ease-in-out infinite; 
         }
-        
-        @keyframes fadeInUp {
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes morph {
+            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
         }
+        .sticker.diamond { clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); width: 80px; height: 80px; }
+        .sticker.polaroid { 
+            background: white; 
+            padding: 8px 8px 25px 8px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15); 
+            transform: rotate(-5deg); 
+            width: 90px; height: 110px; 
+        }
+        .sticker.tape { 
+            background: rgba(255,255,255,0.9); 
+            border-radius: 2px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+            width: 100px; height: 65px; 
+            position: relative; 
+        }
+        .sticker.tape::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 16px;
+            background: rgba(255,255,255,0.6);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .sticker.rotate-15 { transform: rotate(15deg); }
+        .sticker.rotate-n10 { transform: rotate(-10deg); }
+        .sticker.rotate-5 { transform: rotate(5deg); }
         
-        /* 聊天容器 */
-        .chat-container {
+        .sticker-hint { position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); font-size: 9px; color: #666; white-space: nowrap; }
+        
+        /* 3D翻转关键词卡片 */
+        .keyword-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
             width: 100%;
             max-width: 360px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-top: 10px;
+            margin-top: 20px;
+            perspective: 1000px;
         }
         
-        /* 聊天气泡基础 */
-        .chat-bubble {
-            max-width: 75%;
-            padding: 14px 18px;
-            border-radius: 18px;
-            font-size: 15px;
-            line-height: 1.5;
+        .flip-card {
+            aspect-ratio: 1;
             position: relative;
-            word-wrap: break-word;
-            opacity: 0;
-            transform: scale(0.8);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
         }
         
-        .active .chat-bubble {
-            animation: popIn 0.5s forwards;
-        }
+        .flip-card.flipped { transform: rotateY(180deg); }
         
-        @keyframes popIn {
-            to { opacity: 1; transform: scale(1); }
-        }
-        
-        /* 对方（韦）- 左侧粉色 */
-        .bubble-left {
-            align-self: flex-start;
-            background: linear-gradient(135deg, #ffd1ff 0%, #fbd786 100%);
-            color: #5a4a3a;
-            border-bottom-left-radius: 4px;
-            margin-right: auto;
-        }
-        
-        .bubble-left::after {
-            content: '';
+        .flip-face {
             position: absolute;
-            left: -8px;
-            bottom: 0;
-            width: 20px;
-            height: 20px;
-            background: linear-gradient(135deg, #ffd1ff 0%, #fbd786 100%);
-            clip-path: polygon(100% 0, 0% 100%, 100% 100%);
-        }
-        
-        /* 我 - 右侧深色 */
-        .bubble-right {
-            align-self: flex-end;
-            background: rgba(255,255,255,0.95);
-            color: #333;
-            border-bottom-right-radius: 4px;
-            margin-left: auto;
-        }
-        
-        .bubble-right::after {
-            content: '';
-            position: absolute;
-            right: -8px;
-            bottom: 0;
-            width: 20px;
-            height: 20px;
-            background: rgba(255,255,255,0.95);
-            clip-path: polygon(0 0, 0% 100%, 100% 100%);
-        }
-        
-        /* 统计数字大展示 */
-        .stat-big {
-            font-size: 48px;
-            font-weight: 900;
-            color: #fff;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            text-align: center;
-            margin: 10px 0;
-            font-family: 'Noto Serif SC', serif;
-        }
-        
-        .stat-label {
-            font-size: 13px;
-            color: rgba(255,255,255,0.9);
-            text-align: center;
-            background: rgba(255,255,255,0.2);
-            padding: 4px 12px;
-            border-radius: 12px;
-            display: inline-block;
-            margin: 0 auto;
-        }
-        
-        /* TOP标签 */
-        .top-badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.3);
-            color: white;
-            padding: 2px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            border: 1px solid rgba(255,255,255,0.4);
-        }
-        
-        /* 中间统计卡片 */
-        .stat-card-mid {
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 20px;
-            margin: 10px auto;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.3);
-            max-width: 280px;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        
-        .active .stat-card-mid {
-            animation: fadeInUp 0.6s forwards;
-        }
-        
-        /* 其他原有样式保持不变 */
-        .number-big {
-            font-size: 64px;
-            font-weight: 900;
-            color: white;
-            text-align: center;
-            line-height: 1;
-            margin: 20px 0;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        }
-        
-        .glass-card {
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 20px;
-            margin: 10px 0;
-            border: 1px solid rgba(255,255,255,0.3);
             width: 100%;
-            max-width: 350px;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        
-        .active .glass-card {
-            animation: fadeInUp 0.6s forwards;
-        }
-        
-        .photo-placeholder {
-            width: 100%;
-            max-width: 300px;
-            height: 180px;
-            background: rgba(255,255,255,0.15);
-            border: 2px dashed rgba(255,255,255,0.5);
-            border-radius: 16px;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin: 20px auto;
-            color: white;
-            font-size: 14px;
-            position: relative;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
             overflow: hidden;
-            cursor: pointer;
         }
         
-        .photo-placeholder::before {
-            content: '📷';
-            font-size: 40px;
-            margin-bottom: 8px;
-            opacity: 0.8;
+        .flip-front {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
         }
         
-        .indicators {
-            position: fixed;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            z-index: 100;
-        }
-        
-        .indicator {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.4);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .indicator.active {
+        .flip-back {
+            transform: rotateY(180deg);
             background: white;
-            transform: scale(1.5);
         }
         
-        .nav-hint {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            font-size: 12px;
-            opacity: 0.8;
-            animation: bounce 2s infinite;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-8px); }
-            60% { transform: translateX(-50%) translateY(-4px); }
-        }
-        
-        .highlight {
-            color: #fff;
-            font-weight: 700;
-            background: rgba(255,255,255,0.25);
-            padding: 2px 8px;
-            border-radius: 12px;
-        }
-        
-        .timeline {
+        .flip-back img, .flip-back .photo-fill {
             width: 100%;
-            max-width: 340px;
-            position: relative;
-            padding-left: 30px;
-            margin-top: 20px;
+            height: 100%;
+            object-fit: cover;
         }
         
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 8px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: rgba(255,255,255,0.3);
+        .keyword-icon { font-size: 36px; margin-bottom: 8px; }
+        .keyword-text { font-size: 20px; font-weight: 700; color: white; font-family: 'Ma Shan Zheng', cursive; letter-spacing: 2px; }
+        .keyword-hint { font-size: 11px; color: rgba(255,255,255,0.8); margin-top: 6px; }
+        
+        /* 信件页样式 */
+        .letter-container {
+            width: 100%;
+            max-width: 360px;
+            height: calc(100vh - 100px);
+            overflow-y: auto;
+            padding: 25px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.15);
+            margin-top: 10px;
         }
         
-        .timeline-item {
-            position: relative;
-            margin-bottom: 20px;
-            opacity: 0;
-            transform: translateX(-20px);
-        }
-        
-        .active .timeline-item {
-            animation: fadeInLeft 0.6s forwards;
-        }
-        
-        .active .timeline-item:nth-child(1) { animation-delay: 0.1s; }
-        .active .timeline-item:nth-child(2) { animation-delay: 0.2s; }
-        .active .timeline-item:nth-child(3) { animation-delay: 0.3s; }
-        .active .timeline-item:nth-child(4) { animation-delay: 0.4s; }
-        
-        @keyframes fadeInLeft {
-            to { opacity: 1; transform: translateX(0); }
-        }
-        
-        .timeline-dot {
-            position: absolute;
-            left: -26px;
-            top: 2px;
-            width: 12px;
-            height: 12px;
-            background: white;
-            border-radius: 50%;
-            box-shadow: 0 0 0 4px rgba(255,255,255,0.3);
-        }
-        
-        .keyword {
-            font-size: 48px;
-            font-weight: 900;
-            color: white;
-            text-align: center;
-            margin: 20px 0;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        .letter-content {
+            font-size: 16px;
+            color: rgba(255,255,255,0.95);
+            line-height: 2.2;
+            text-align: justify;
             font-family: 'Ma Shan Zheng', cursive;
+            letter-spacing: 1px;
         }
+        
+        .letter-photo {
+            width: 100%;
+            height: 160px;
+            background: rgba(255,255,255,0.1);
+            border: 2px dashed rgba(255,255,255,0.4);
+            border-radius: 12px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 13px;
+        }
+        
+        .letter-signature {
+            text-align: right;
+            margin-top: 30px;
+            font-size: 16px;
+            color: rgba(255,255,255,0.9);
+            font-family: 'Ma Shan Zheng', cursive;
+            line-height: 1.8;
+        }
+        
+        /* 其他组件 */
+        .number-big { font-size: 56px; font-weight: 900; color: white; text-align: center; line-height: 1; margin: 15px 0; text-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+        .glass-card { background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border-radius: 20px; padding: 18px; margin: 8px 0; border: 1px solid rgba(255,255,255,0.3); width: 100%; max-width: 350px; }
+        .photo-placeholder { width: 100%; height: 100%; background: rgba(200,200,200,0.3); display: flex; align-items: center; justify-content: center; color: #666; font-size: 11px; text-align: center; padding: 5px; }
+        
+        .surprise-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+            max-width: 360px;
+            margin-top: 10px;
+        }
+        .surprise-item { background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border-radius: 12px; padding: 12px; border: 1px solid rgba(255,255,255,0.3); opacity: 0; transform: translateY(10px); }
+        .active .surprise-item { animation: fadeInUp 0.4s forwards; }
+        .active .surprise-item:nth-child(1) { animation-delay: 0.05s; }
+        .active .surprise-item:nth-child(2) { animation-delay: 0.1s; }
+        .active .surprise-item:nth-child(3) { animation-delay: 0.15s; }
+        .active .surprise-item:nth-child(4) { animation-delay: 0.2s; }
+        .active .surprise-item:nth-child(5) { animation-delay: 0.25s; }
+        .active .surprise-item:nth-child(6) { animation-delay: 0.3s; }
+        .active .surprise-item:nth-child(7) { animation-delay: 0.35s; }
+        .active .surprise-item:nth-child(8) { animation-delay: 0.4s; }
+        .active .surprise-item:nth-child(9) { animation-delay: 0.45s; }
+        .surprise-date { font-size: 10px; color: rgba(255,255,255,0.9); margin-bottom: 4px; font-weight: 600; }
+        .surprise-text { font-size: 12px; color: white; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .surprise-fullwidth { grid-column: 1 / -1; }
+        
+        .indicators { position: fixed; right: 15px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 10px; z-index: 100; }
+        .indicator { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; transition: all 0.3s; }
+        .indicator.active { background: white; transform: scale(1.5); }
+        
+        .back-btn { position: absolute; top: 15px; left: 15px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 13px; backdrop-filter: blur(10px); z-index: 50; }
+        
+        .highlight { color: #fff; font-weight: 700; background: rgba(255,255,255,0.25); padding: 2px 8px; border-radius: 12px; }
     </style>
 </head>
 <body>
@@ -405,43 +276,42 @@
         <div class="indicators" id="indicators"></div>
 
         <!-- 第1页：封面 -->
-        <section class="slide active" data-index="0">
-            <div class="handwriting" style="font-size: 24px; color: rgba(255,255,255,0.9); margin-bottom: 20px; margin-top: 40px; opacity: 0; animation: fadeInUp 1s forwards;">
-                致我最亲爱的韦
+      <section class="slide active" data-index="0">
+            <div class="handwriting" style="font-size: 22px; color: rgba(255,255,255,0.9); margin-bottom: 15px; margin-top: 40px; opacity: 0; animation: fadeInUp 1s forwards;">韦你 千千万万遍</div>
+            <h1 class="title-main" style="font-size: 40px;">我们的周年纪念</h1>
+            <p class="subtitle" style="margin-top: 10px;">这一年，时光勾勒出我们的专属浪漫</p>
+            
+            <!-- 封面主照片 - 只保留这一张 -->
+            <div class="cover-photo">
+                <!-- 有照片时取消下面这行的注释，替换URL -->
+               - <img src="https://github.com/SeanLee025/letter/blob/main/%E5%B0%81%E9%9D%A2%E9%A1%B5.jpg" alt="封面照片"> -
+                <div style="text-align: center;">
+                    <span style="font-size: 48px; margin-bottom: 10px; display: block;">📷</span>
+                    <span style="font-size: 14px;">点击替换主照片</span>
+                    <span style="font-size: 12px; opacity: 0.8; display: block; margin-top: 5px;">建议 3:4 竖版</span>
+                </div>
             </div>
             
-            <h1 class="title-main" style="font-size: 44px;">我们的周年纪念</h1>
-            
-            <p class="subtitle" style="margin-top: 10px; font-size: 16px;">
-                这一年，我们把时光酿成了专属浪漫
-            </p>
-            
-            <div class="photo-placeholder" onclick="alert('点击替换：建议上传双人合照')" style="margin-top: 30px;">
-                点击替换封面照片<br>
-                <span style="font-size: 12px; opacity: 0.8;">建议尺寸：3:4 竖版</span>
-            </div>
-            
-            <div class="nav-hint">
+            <div style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); color: white; font-size: 12px; opacity: 0.8; display: flex; flex-direction: column; align-items: center;">
                 <span>向上滑动开启回忆</span>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 5v14M19 12l-7 7-7-7"/>
-                </svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-top: 5px;"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
             </div>
         </section>
 
-        <!-- 第2页：见面统计 -->
+
+          <!-- 第2页：见面统计 -->
         <section class="slide" data-index="1">
-            <h2 class="title-main">「见面限定·朝夕相伴」</h2>
+            <h2 class="title-main">「一见倾心·四季有痕」</h2>
             
             <div class="number-big" id="days-count" style="margin-top: 30px;">0</div>
-            <div style="text-align: center; color: rgba(255,255,255,0.9); font-size: 14px; letter-spacing: 3px; margin-bottom: 30px;">天 · 朝夕相处</div>
+            <div style="text-align: center; color: rgba(255,255,255,0.9); font-size: 14px; letter-spacing: 3px; margin-bottom: 30px;">天 · 触手可及</div>
             
             <div style="width: 100%; max-width: 340px;">
                 <div class="glass-card" style="animation-delay: 0.1s;">
-                    <div style="font-size: 16px; font-weight: 700; color: white; margin-bottom: 8px;">📅 月度巅峰</div>
+                    <div style="font-size: 16px; font-weight: 700; color: white; margin-bottom: 8px;">📅 朝夕相伴</div>
                     <div style="font-size: 14px; color: rgba(255,255,255,0.95); line-height: 1.6;">
-                        <span class="highlight">12月相见16天</span>，爱意浓度拉满<br>
-                        2026年1月仅见4天，是忙碌的小插曲
+                        <span class="highlight">12月相见16天</span>陪伴是最长情的告白<br>
+                     <span class="highlight"> 5月、8月仅见5天</span>思念终汇成缠绵的红线<br>
                     </div>
                 </div>
                 
@@ -449,25 +319,25 @@
                     <div style="font-size: 16px; font-weight: 700; color: white; margin-bottom: 8px;">👀 遗憾与期待</div>
                     <div style="font-size: 14px; color: rgba(255,255,255,0.95); line-height: 1.6;">
                         有<span class="highlight">5天</span>只来得及凝望一眼你的睡颜<br>
-                        但每一次离别，都是为了更好的重逢
+                        每一次离别，都化作重逢的期待
                     </div>
                 </div>
                 
                 <div class="glass-card" style="animation-delay: 0.3s;">
-                    <div style="font-size: 16px; font-weight: 700; color: white; margin-bottom: 8px;">📏 距离博弈</div>
+                    <div style="font-size: 16px; font-weight: 700; color: white; margin-bottom: 8px;">📏 此情可待</div>
                     <div style="font-size: 14px; color: rgba(255,255,255,0.95); line-height: 1.6;">
-                        最长分离 <span class="highlight">33天</span>，相思不断蔓延<br>
-                        最短间隔不过朝夕，昨天分别明天相拥
+                        最长的分离 <span class="highlight">33天</span>相思在心口不断蔓延<br>
+                        最短间隔不过朝夕，昨日作别又明日相拥
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 第3页：足迹地图 -->
+    <!-- 第3页：足迹地图 -->
         <section class="slide" data-index="2">
-            <h2 class="title-main">「足迹地图·山海皆赴」</h2>
+            <h2 class="title-main">「天涯海角·有你可赴」</h2>
             <p class="subtitle" style="margin-bottom: 20px;">
-                我们的爱意，散落在 <span class="highlight">9座城市</span> 的烟火里
+                你我的缘分，散落在 <span class="highlight">9座城市</span> 的烟火里
             </p>
             
             <div style="width: 100%; max-width: 340px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 20px; position: relative; margin: 20px auto; overflow: hidden; border: 1px solid rgba(255,255,255,0.2);">
@@ -484,142 +354,146 @@
             </div>
             
             <div class="glass-card" style="max-width: 340px; padding: 12px; text-align: center; font-size: 13px; color: rgba(255,255,255,0.95);">
-                襄阳 · 郧西 · 鄂州 · 南宁 · 武汉 · 黄石 · 柳州 · 崇左 · 钦州
+                武汉 · 郧西 · 襄阳 · 柳州 · 鄂州 · 黄石 · 钦州 · 崇左 · 南宁
             </div>
             
             <div style="display: flex; gap: 15px; margin-top: 20px; max-width: 340px; width: 100%;">
                 <div class="glass-card" style="flex: 1; text-align: center; padding: 15px; margin: 0;">
                     <div style="font-size: 24px; font-weight: 700; color: white;">1455km</div>
-                    <div style="font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 4px;">河南↔广西</div>
+                    <div style="font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 4px;">开封↔南宁</div>
                 </div>
                 <div class="glass-card" style="flex: 1; text-align: center; padding: 15px; margin: 0;">
                     <div style="font-size: 24px; font-weight: 700; color: white;">120km</div>
-                    <div style="font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 4px;">心与心</div>
+                    <div style="font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 4px;">武汉↔黄冈</div>
                 </div>
             </div>
         </section>
+
 
         <!-- 第4页：时光印记 -->
         <section class="slide" data-index="3">
-            <h2 class="title-main">「时光印记·昼夜相伴」</h2>
-            <p class="subtitle">这一年的昼夜，都藏着与你相关的细碎瞬间</p>
+            <div class="sticker tape rotate-5" style="top: 80px; right: 20px;">
+                <div class="photo-placeholder" style="margin-top: 10px;">凌晨照<br>16:9</div>
+            </div>
             
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div style="font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 4px;">2025年7月13日 清晨6:00前</div>
-                    <div style="font-size: 14px; color: white; line-height: 1.5;">最早的山海，整装出发只为与你捕捉日出烂漫</div>
+            <h2 class="title-main" style="margin-top: 10px;">「时光印记·昼夜相伴」</h2>
+            <div style="width: 100%; max-width: 340px; margin-top: 20px;">
+                <div style="display: flex; align-items: center; margin-bottom: 18px; opacity: 0; animation: fadeInUp 0.6s 0.1s forwards;">
+                    <div style="width: 65px; height: 65px; border-radius: 50%; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.4); margin-right: 15px; flex-shrink: 0; overflow: hidden;">
+                        <div class="photo-placeholder" style="font-size: 10px;">日出</div>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 11px; color: rgba(255,255,255,0.8);">2025.07.13 清晨6:00</div>
+                        <div style="font-size: 14px; color: white; font-weight: 600; margin-top: 3px;">最早的山海，整装出发只为一同捕捉日出烂漫</div>
+                    </div>
                 </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div style="font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 4px;">2026年1月1日 凌晨2:00</div>
-                    <div style="font-size: 14px; color: white; line-height: 1.5;">最晚的狂欢，高架上飞驰，夜色为我们的快乐续航</div>
+                <div style="display: flex; align-items: center; margin-bottom: 18px; opacity: 0; animation: fadeInUp 0.6s 0.2s forwards;">
+                    <div style="width: 65px; height: 65px; border-radius: 50%; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.4); margin-right: 15px; flex-shrink: 0; overflow: hidden;">
+                        <div class="photo-placeholder" style="font-size: 10px;">夜景</div>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 11px; color: rgba(255,255,255,0.8);">2026.01.01 凌晨2:00</div>
+                        <div style="font-size: 14px; color: white; font-weight: 600; margin-top: 3px;">最晚的狂欢，是在高架上飞驰的快乐未完待续</div>
+                    </div>
                 </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div style="font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 4px;">2025年4月23日 凌晨2:01</div>
-                    <div style="font-size: 14px; color: white; line-height: 1.5;">深夜的絮语，聊不完的话题，都是心动的证据</div>
+                <div style="display: flex; align-items: center; margin-bottom: 18px; opacity: 0; animation: fadeInUp 0.6s 0.3s forwards;">
+                    <div style="width: 65px; height: 65px; border-radius: 50%; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.4); margin-right: 15px; flex-shrink: 0; overflow: hidden;">
+                        <div class="photo-placeholder" style="font-size: 10px;">聊天</div>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 11px; color: rgba(255,255,255,0.8);">2025.04.23 凌晨2:01</div>
+                        <div style="font-size: 14px; color: white; font-weight: 600; margin-top: 3px;">深夜的絮语，是相隔千里仍未尽兴的话题</div>
+                    </div>
                 </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div style="font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 4px;">2025年6月29日 凌晨1:36</div>
-                    <div style="font-size: 14px; color: white; line-height: 1.5;">专属偷拍，定格抢被子的模样，细碎日常全是温柔</div>
+                <div style="display: flex; align-items: center; opacity: 0; animation: fadeInUp 0.6s 0.4s forwards;">
+                    <div style="width: 65px; height: 65px; border-radius: 50%; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.4); margin-right: 15px; flex-shrink: 0; overflow: hidden;">
+                        <div class="photo-placeholder" style="font-size: 10px;">偷拍</div>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 11px; color: rgba(255,255,255,0.8);">2025.06.29 凌晨1:36</div>
+                        <div style="font-size: 14px; color: white; font-weight: 600; margin-top: 3px;">“最晚”的偷拍，是抢被子的罪行记录在你的温柔里</div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- 第5页：高频聊天词汇（新增独立页面） -->
+        <!-- 第5页：高频聊天词汇 -->
         <section class="slide" data-index="4">
-            <h2 class="title-main">「我们的聊天密码」</h2>
-            <p class="subtitle">那些絮絮叨叨的日常，组成了专属字典</p>
+            <h2 class="title-main" style="margin-top: 10px; font-size: 28px;">「插科打诨·恋人絮语」</h2>
+            <p class="subtitle" style="margin-bottom: 10px;">那些絮絮叨叨的日常，记录着被浸染的爱意</p>
             
-            <div class="chat-container">
-                <!-- TOP1 一字 -->
-                <div style="text-align: center; margin-bottom: 10px; opacity: 0; animation: fadeInUp 0.6s 0.1s forwards;">
-                    <span class="top-badge">TOP 1 · 一字之王</span>
-                </div>
-                
-                <div class="chat-bubble bubble-left" style="animation-delay: 0.2s;">
-                    <div style="font-size: 32px; font-weight: 900; text-align: center; margin: 5px 0;">爬</div>
-                    <div style="font-size: 12px; opacity: 0.8; text-align: center;">共 139 次</div>
-                </div>
-                
-                <div class="stat-card-mid" style="animation-delay: 0.4s; background: rgba(255,255,255,0.15);">
-                    <div style="font-size: 13px; color: rgba(255,255,255,0.95); line-height: 1.6;">
-                        这一年我们之间说的最多的一个字<br>
-                        全是你对我说的 <span style="font-size: 18px; font-weight: 700;">139</span> 次<br>
-                        <span style="font-size: 12px; opacity: 0.8; font-style: italic;">（虽然有点凶，但我都知道是玩笑）</span>
+            <div style="width: 100%; max-width: 360px; margin-top: 5px;">
+                <div style="background: rgba(255,255,255,0.15); border-radius: 16px; padding: 15px; margin-bottom: 10px; display: flex; align-items: center; gap: 15px;">
+                    <div style="flex-shrink: 0;">
+                        <div style="background: rgba(255,255,255,0.3); padding: 2px 10px; border-radius: 12px; font-size: 10px; color: white; margin-bottom: 5px;">一字真言</div>
+                        <div style="font-size: 36px; font-weight: 900; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.2);">爬</div>
+                        <div style="font-size: 10px; color: rgba(255,255,255,0.9);">139次</div>
+                    </div>
+                    <div style="flex: 1; font-size: 12px; color: rgba(255,255,255,0.95); line-height: 1.5; border-left: 2px solid rgba(255,255,255,0.3); padding-left: 12px;">
+                        全是你对我的规训<br><strong style="color: #fff;">虽然有点凶，但也有点甜</strong>
                     </div>
                 </div>
                 
-                <!-- TOP2 二字 -->
-                <div style="text-align: center; margin: 20px 0 10px; opacity: 0; animation: fadeInUp 0.6s 0.5s forwards;">
-                    <span class="top-badge">TOP 2 · 二字经典</span>
-                </div>
-                
-                <div style="display: flex; justify-content: center; gap: 10px;">
-                    <div class="chat-bubble bubble-left" style="animation-delay: 0.6s; max-width: 45%;">
-                        笑死
-                    </div>
-                    <div class="chat-bubble bubble-right" style="animation-delay: 0.7s; max-width: 45%;">
-                        笑死
+                <div style="background: rgba(255,255,255,0.15); border-radius: 16px; padding: 12px 15px; margin-bottom: 10px; text-align: center;">
+                    <div style="background: rgba(255,255,255,0.3); display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 10px; color: white; margin-bottom: 8px;">二字经典</div>
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+                        <div style="background: linear-gradient(135deg, #ffd1ff 0%, #fbd786 100%); color: #5a4a3a; padding: 6px 12px; border-radius: 12px; font-size: 13px; border-bottom-left-radius: 4px;">笑死</div>
+                        <div style="font-size: 28px; font-weight: 900; color: white; text-shadow: 0 2px 8px rgba(0,0,0,0.2);">320<span style="font-size: 11px;">次</span></div>
+                        <div style="background: white; color: #333; padding: 6px 12px; border-radius: 12px; font-size: 13px; border-bottom-right-radius: 4px;">笑死</div>
                     </div>
                 </div>
                 
-                <div class="stat-big" style="font-size: 36px; animation-delay: 0.8s; opacity: 0; animation: fadeInUp 0.6s 0.8s forwards;">320<span style="font-size: 14px; font-weight: 400;">次</span></div>
-                <div style="text-align: center; color: rgba(255,255,255,0.9); font-size: 13px; margin-bottom: 20px; opacity: 0; animation: fadeInUp 0.6s 0.9s forwards;">
-                    是我们共享的快乐瞬间
-                </div>
-                
-                <!-- TOP3 三字 -->
-                <div style="text-align: center; margin: 10px 0; opacity: 0; animation: fadeInUp 0.6s 1s forwards;">
-                    <span class="top-badge">TOP 3 · 三字告白</span>
-                </div>
-                
-                <div class="chat-bubble bubble-right" style="animation-delay: 1.1s; margin-bottom: 10px;">
-                    喜欢你 <span style="font-size: 12px; opacity: 0.6;">×80</span>
-                </div>
-                
-                <div class="chat-bubble bubble-left" style="animation-delay: 1.2s; background: rgba(255,255,255,0.3); color: white;">
-                    喜欢你 <span style="font-size: 12px; opacity: 0.7;">×1</span><br>
-                    <span style="font-size: 11px; opacity: 0.8;">（模仿你说话）</span>
-                </div>
-                
-                <div class="stat-card-mid" style="animation-delay: 1.4s; margin-top: 20px; background: rgba(255,255,255,0.25); border: 1px solid rgba(255,255,255,0.4);">
-                    <div style="font-size: 15px; color: white; font-weight: 600; line-height: 1.8; font-family: 'Ma Shan Zheng', cursive; letter-spacing: 1px;">
-                        但真正的喜欢<br>
-                        从来都不是言语<br>
-                        而是行动
+                <div style="background: rgba(255,255,255,0.15); border-radius: 16px; padding: 12px 15px; margin-bottom: 10px;">
+                    <div style="text-align: center; margin-bottom: 8px;">
+                        <div style="background: rgba(255,255,255,0.3); display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 10px; color: white;">三字告白</div>
                     </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="text-align: center;">
+                            <div style="background: white; color: #333; padding: 5px 10px; border-radius: 10px; font-size: 12px; margin-bottom: 4px; border-bottom-right-radius: 4px;">喜欢你</div>
+                            <div style="font-size: 18px; font-weight: 700; color: white;">80<span style="font-size: 9px;">次</span></div>
+                            <div style="font-size: 9px; color: rgba(255,255,255,0.8);">我说的</div>
+                        </div>
+                        <div style="font-size: 14px; color: rgba(255,255,255,0.6);">VS</div>
+                        <div style="text-align: center;">
+                            <div style="background: linear-gradient(135deg, #ffd1ff 0%, #fbd786 100%); color: #5a4a3a; padding: 5px 10px; border-radius: 10px; font-size: 11px; margin-bottom: 4px; border-bottom-left-radius: 4px;">喜欢你</div>
+                            <div style="font-size: 18px; font-weight: 700; color: white;">1<span style="font-size: 9px;">次</span></div>
+                            <div style="font-size: 9px; color: rgba(255,255,255,0.8);">你模仿我说</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(255,255,255,0.25); border-radius: 12px; padding: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.4);">
+                    <div style="font-size: 14px; color: white; font-weight: 600; font-family: 'Ma Shan Zheng', cursive; letter-spacing: 1px;">点点滴滴铺就心贴心的距离</div>
                 </div>
             </div>
         </section>
 
         <!-- 第6页：昵称与吵架 -->
         <section class="slide" data-index="5">
-            <div style="width: 100%; max-width: 350px; margin-top: 20px;">
+            <div class="sticker oval rotate-n10" style="top: 100px; left: 10px; width: 85px; height: 60px; z-index: 5;">
+                <div class="photo-placeholder">昵称<br>16:9</div>
+            </div>
+            
+              <div style="width: 100%; max-width: 350px; margin-top: 20px;">
                 <div class="glass-card" style="text-align: center; padding: 25px;">
-                    <div style="font-size: 20px; font-weight: 700; color: white; margin-bottom: 15px;">💌 专属昵称</div>
+               <div style="font-size: 20px; font-weight: 700; color: white; margin-bottom: 15px;">💌 专属昵称</div>
                     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; font-size: 14px; color: rgba(255,255,255,0.95);">
                         <span style="background: rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px;">木薯阳 13次</span>
                         <span style="background: rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px;">李狗嗨 11次</span>
                         <span style="background: rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px;">李书记 16次</span>
-                        <span style="background: rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px;">儿子 35次</span>
+                        <span style="background: rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px;">** 35次</span>
                     </div>
                     <div style="margin-top: 15px; font-size: 13px; color: rgba(255,255,255,0.8); font-style: italic;">
-                        每一个称呼，都是独一份的偏爱
+                     不那么正经的称呼里，都是独一份的偏爱
                     </div>
                 </div>
                 
                 <div class="glass-card" style="background: rgba(255,255,255,0.15); margin-top: 20px;">
-                    <div style="font-size: 18px; font-weight: 700; color: white; margin-bottom: 10px;">😤 小吵小闹·越爱越牢</div>
+                    <div style="font-size: 18px; font-weight: 700; color: white; margin-bottom: 10px;">😤 小吵小闹·笨狗先哭</div>
                     <div style="font-size: 14px; color: rgba(255,255,255,0.95); line-height: 1.8;">
-                        这一年共拌嘴 <span class="highlight">6次</span><br>
-                        5次是我不懂事，1次是我太懒惰<br>
-                        <span style="font-size: 13px; opacity: 0.9;">谢谢你始终包容我的小脾气</span>
+                        这一年共惹你生气 <span class="highlight">6次</span><br>
+                        4次是我不懂事，2次是我不成熟<br>
+                        <span style="font-size: 13px; opacity: 0.9;">谢谢你不厌其烦地陪伴</span>
                     </div>
                 </div>
                 
@@ -629,72 +503,48 @@
             </div>
         </section>
 
+
         <!-- 第7页：惊喜瞬间 -->
         <section class="slide" data-index="6">
-            <h2 class="title-main" style="margin-bottom: 20px;">✨ 惊喜瞬间·温柔暴击</h2>
+            <div class="sticker polaroid rotate-5" style="top: 80px; right: 10px; z-index: 5;">
+                <div class="photo-placeholder" style="height: calc(100% - 25px);">520<br>惊喜</div>
+                <div class="sticker-hint">2025.05.20</div>
+            </div>
             
-            <div style="width: 100%; max-width: 360px; height: 400px; overflow-y: auto; padding-right: 5px;">
-                <div class="glass-card" style="margin-bottom: 15px; padding: 15px;">
-                    <div style="font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 5px;">2月12日 · 元宵节</div>
-                    <div style="font-size: 14px; color: white; line-height: 1.5;">你说元宵节才是中国人的专属情人节，转身就在离别时递来一束花</div>
-                </div>
-                
-                <div class="glass-card" style="margin-bottom: 15px; animation-delay: 0.1s; padding: 15px;">
-                    <div style="font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 5px;">4月25日 · 重庆</div>
-                    <div style="font-size: 14px; color: white; line-height: 1.5;">跨越7小时硬座的奔赴，在重庆饭庄的烟火气里，让我差点红了眼眶</div>
-                </div>
-                
-                <div class="glass-card" style="margin-bottom: 15px; animation-delay: 0.2s; padding: 15px;">
-                    <div style="font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 5px;">5月20日 · 专属歌单</div>
-                    <div style="font-size: 14px; color: white; line-height: 1.5;">嘴硬说着不过这种节日，却悄悄备好双份专属歌单，家里布满惊喜</div>
-                </div>
-                
-                <div class="glass-card" style="margin-bottom: 15px; animation-delay: 0.3s; padding: 15px;">
-                    <div style="font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 5px;">9月2日 · 专属外卖员</div>
-                    <div style="font-size: 14px; color: white; line-height: 1.5;">以为只是炸鸡外卖，开门却看见你笑着站在门口</div>
-                </div>
-                
-                <div class="glass-card" style="margin-bottom: 15px; animation-delay: 0.4s; padding: 15px;">
-                    <div style="font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 5px;">10月11日 · 突袭查寝</div>
-                    <div style="font-size: 14px; color: white; line-height: 1.5;">一场猝不及防的"突袭查寝"，让寻常时刻充满新鲜感</div>
-                </div>
-                
-                <div class="glass-card" style="margin-bottom: 15px; animation-delay: 0.5s; padding: 15px;">
-                    <div style="font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 5px;">10月31日 · 万圣节</div>
-                    <div style="font-size: 14px; color: white; line-height: 1.5;">明明前一秒还说不陪我过，却始终把我的每个期待都放在心上</div>
-                </div>
-                
-                <div class="glass-card" style="margin-bottom: 15px; animation-delay: 0.6s; padding: 15px;">
-                    <div style="font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 5px;">12月10日 · 生日</div>
-                    <div style="font-size: 14px; color: white; line-height: 1.5;">凌晨钟声响起前悄然来临，让深夜的陪伴成为最动人的礼物</div>
-                </div>
-                
-                <div class="glass-card" style="margin-bottom: 15px; animation-delay: 0.7s; padding: 15px;">
-                    <div style="font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 5px;">12月16日 · 圣诞树</div>
-                    <div style="font-size: 14px; color: white; line-height: 1.5;">不能陪我过圣诞，便送我一棵圣诞树，把缺席换成满室仪式感</div>
-                </div>
-                
-                <div class="glass-card" style="animation-delay: 0.8s; padding: 15px;">
-                    <div style="font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 5px;">12月26日 · 突然袭击</div>
-                    <div style="font-size: 14px; color: white; line-height: 1.5;">又一场毫无预告的突然袭击，爱意从不需要提前报备</div>
-                </div>
+            <h2 class="title-main" style="margin-bottom: 8px; font-size: 26px;">✨ 惊喜瞬间·温柔暴击</h2>
+            <p class="subtitle" style="margin-bottom: 12px; font-size: 12px;">你说自己浪漫绝缘，却为我准备了千万次惊喜</p>
+            
+            <div class="surprise-grid">
+                <div class="surprise-item"><div class="surprise-date">2月12日 · 元宵节</div><div class="surprise-text">我难过情人节不能相聚，你却说元宵才是中国人的情人节</div></div>
+                <div class="surprise-item"><div class="surprise-date">4月25日 · 倾心</div><div class="surprise-text">最心疼的爱意，是你7小时的硬座无敌铁腚</div></div>
+                <div class="surprise-item"><div class="surprise-date">5月20日 · 520</div><div class="surprise-text">本以为歌单是礼物，却发现家里还藏着真人惊喜</div></div>
+                <div class="surprise-item"><div class="surprise-date">9月2日 · 外卖员</div><div class="surprise-text">门打开的瞬间，才发现是我的专属外卖员</div></div>
+                <div class="surprise-item"><div class="surprise-date">10月11日 · 查寝</div><div class="surprise-text">一场“突袭查寝”，让平淡的生活充满新鲜感</div></div>
+                <div class="surprise-item"><div class="surprise-date">10月31日 · 万圣</div><div class="surprise-text">每一次说好的不陪伴，却每次又奔赴相伴</div></div>
+                <div class="surprise-item"><div class="surprise-date">12月10日 · 生日</div><div class="surprise-text">最好的生日礼物，是生日有你相伴</div></div>
+                <div class="surprise-item"><div class="surprise-date">12月16日 · 圣诞树</div><div class="surprise-text">一句圣诞的氛围，换来家里的蓬荜生辉</div></div>
+                <div class="surprise-item surprise-fullwidth" style="background: rgba(255,255,255,0.25);"><div class="surprise-date">12月26日 · 突袭</div><div class="surprise-text">我知道，爱意从不需要提前报备</div></div>
             </div>
         </section>
 
-        <!-- 第8页：年度金曲与总结 -->
+        <!-- 第8页：年度金曲 -->
         <section class="slide" data-index="7">
-            <h2 class="title-main">「年度金曲·独家记忆」</h2>
+            <div class="sticker circle" style="top: 100px; left: 20px; width: 70px; height: 70px; z-index: 5;">
+                <div class="photo-placeholder" style="font-size: 10px;">专辑<br>封面</div>
+            </div>
             
-            <div style="width: 180px; height: 180px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 25px auto; border: 3px solid rgba(255,255,255,0.4); position: relative;">
-                <div style="width: 160px; height: 160px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column;">
-                    <span style="font-size: 40px;">🎵</span>
-                    <span style="color: white; font-size: 11px; margin-top: 8px;">正在播放</span>
+            <h2 class="title-main" style="margin-top: 30px;">「年度金曲·独家记忆」</h2>
+            
+            <div style="width: 160px; height: 160px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 25px auto; border: 3px solid rgba(255,255,255,0.4); box-shadow: 0 0 30px rgba(255,255,255,0.2);">
+                <div style="width: 140px; height: 140px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                    <span style="font-size: 32px;">🎵</span>
+                    <span style="color: white; font-size: 10px; margin-top: 8px;">正在播放</span>
                 </div>
             </div>
             
             <div style="text-align: center; color: white; margin-bottom: 25px;">
-                <div style="font-size: 26px; font-weight: 700; margin-bottom: 8px;">《行走的鱼》</div>
-                <div style="font-size: 13px; opacity: 0.9;">3月7日11点 · 郧西江边的晚风</div>
+                <div style="font-size: 24px; font-weight: 700; margin-bottom: 6px;">《行走的鱼》</div>
+                <div style="font-size: 13px; opacity: 0.9;">我偏爱 你的黑 你的笨 你的错</div>
             </div>
             
             <div class="glass-card" style="max-width: 340px;">
@@ -702,34 +552,124 @@
                     这一年，爱是跨越山海的奔赴<br>
                     是细碎日常的陪伴<br>
                     是吵吵闹闹的包容<br>
-                    是藏在细节里的惊喜<br><br>
-                    你把我养得很好<br>
-                    让家里满是生机与温暖
+                    是藏在空气的惊喜<br><br>
+                    是无趣的家里<br>
+                    充满生机与爱意<br>
+向前，是义无反顾<br>
+向后，是无尽温柔
                 </div>
             </div>
         </section>
 
-        <!-- 第9页：关键词 -->
+        <!-- 第9页：年度关键词（3个翻转照片 + 1个跳转信件） -->
         <section class="slide" data-index="8">
-            <h2 class="title-main">年度关键词</h2>
+            <h2 class="title-main" style="margin-top: 20px;">年度关键词</h2>
+            <p class="subtitle" style="margin-bottom: 15px;">点击卡片，解锁专属记忆</p>
             
-            <div class="keyword" style="margin: 30px 0; font-size: 56px;">双向奔赴</div>
-            
-            <p class="subtitle" style="margin: 20px 0; font-size: 16px;">
-                新的一年，愿我们继续并肩<br>
-                把每一段时光都过成喜欢的模样
-            </p>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; max-width: 320px; margin: 30px auto;">
-                <div class="photo-placeholder" style="height: 140px; margin: 0;" onclick="alert('替换照片1')">照片1</div>
-                <div class="photo-placeholder" style="height: 140px; margin: 0;" onclick="alert('替换照片2')">照片2</div>
-                <div class="photo-placeholder" style="height: 140px; margin: 0;" onclick="alert('替换照片3')">照片3</div>
-                <div class="photo-placeholder" style="height: 140px; margin: 0;" onclick="alert('替换照片4')">照片4</div>
+            <div class="keyword-grid">
+                <!-- 人生导师 - 翻转显示照片 -->
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="flip-face flip-front">
+                        <div class="keyword-icon">👨‍🏫</div>
+                        <div class="keyword-text">人生导师</div>
+                        <div class="keyword-hint">点击查看 →</div>
+                    </div>
+                    <div class="flip-face flip-back">
+                        <div class="photo-fill">
+                            <div class="photo-placeholder" style="background: #f0f0f0; color: #999;">替换照片<br>人生导师<br>1:1</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 如父如子 - 翻转显示照片 -->
+                <div class="flip-card" onclick="goToLetter()">
+                   <div class="flip-face flip-front">
+                        <div class="keyword-icon">👨‍👦</div>
+                        <div class="keyword-text">如父如子</div>
+                          <div class="keyword-hint">点击查看 →</div>
+                    </div>
+                </div>
+                
+                <!-- 赌王速成 - 翻转显示照片 -->
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="flip-face flip-front">
+                        <div class="keyword-icon">🎲</div>
+                        <div class="keyword-text">赌王速成</div>
+                        <div class="keyword-hint">点击查看 →</div>
+                    </div>
+                    <div class="flip-face flip-back">
+                        <div class="photo-fill">
+                            <div class="photo-placeholder" style="background: #f0f0f0; color: #999;">替换照片<br>赌王速成<br>1:1</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 江山美人 - 翻转显示照片 -->
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="flip-face flip-front">
+                        <div class="keyword-icon">👑</div>
+                        <div class="keyword-text">江山美人</div>
+                        <div class="keyword-hint">点击查看 →</div>
+                    </div>
+                    <div class="flip-face flip-back">
+                        <div class="photo-fill">
+                            <div class="photo-placeholder" style="background: #f0f0f0; color: #999;">替换照片<br>江山美人<br>1:1</div>
+                        </div>
+                    </div>
+                </div>
             </div>
             
-            <button onclick="goToSlide(0)" style="background: rgba(255,255,255,0.25); border: 1px solid rgba(255,255,255,0.4); color: white; padding: 12px 35px; border-radius: 25px; cursor: pointer; font-size: 14px; margin-top: 20px; backdrop-filter: blur(10px); font-family: 'Noto Serif SC', serif;">
-                再看一遍我们的故事
-            </button>
+            <div style="margin-top: 25px; font-size: 12px; color: rgba(255,255,255,0.7); text-align: center;">
+                有一个地方，藏有另外的心意 💝
+            </div>
+        </section>
+
+        <!-- 第10页：给韦的一封信（仅如父如子跳转） -->
+        <section class="slide" data-index="9">
+            <button class="back-btn" onclick="backToKeywords()">← 返回关键词</button>
+            
+            <h2 class="title-main" style="margin-top: 0px; font-size: 24px;">💌 致我最亲爱的韦</h2>
+            
+            <div class="letter-container">
+                <div class="letter-content">
+                    展信佳。<br><br>
+                    
+                    这一年，你教会了我很多东西。<br>
+                    从人生道理的侃侃而谈，到生活琐事的细心打理，<br>
+                    你总是像一位人生导师，在我迷茫时指点迷津。<br><br>
+                    
+                    <div class="letter-photo">插入：导师/教导瞬间照片<br>建议 16:9 横版</div>
+                    
+                    而我最感动的，是你如父如子的照顾。<br>
+                    那些被细心呵护的瞬间，那些无声的包容，<br>
+                    让我明白，原来被爱是这样的感觉。<br><br>
+                    
+                    <div class="letter-photo">插入：温馨日常/照顾照片<br>建议 16:9 横版</div>
+                    
+                    还记得我们一起练成的"赌王速成"吗？<br>
+                    虽然你总说我是小菜鸟，但每次输给我时眼里的笑意，<br>
+                    比赢牌更让人心动。<br><br>
+                    
+                    <div class="letter-photo">插入：娱乐/游戏照片<br>建议 16:9 横版</div>
+                    
+                    至于"江山美人"，我想告诉你——<br>
+                    我不要江山，我只要你。<br>
+                    你就是我的万里山河，我的星河滚烫。<br><br>
+                    
+                    <div class="letter-photo">插入：合照/定情照<br>建议 16:9 横版</div>
+                    
+                    一年很短，但我们的故事还很长。<br>
+                    愿余生每一个春夏秋冬，都有你在身旁。<br><br>
+                    
+                    爱你，千千万万遍。
+                </div>
+                
+                <div class="letter-signature">
+                    永远爱你的<br>
+                    <span style="font-size: 22px;">[你的名字]</span><br>
+                    <span style="font-size: 13px; opacity: 0.7;">2026年1月</span>
+                </div>
+            </div>
         </section>
     </div>
 
@@ -748,7 +688,7 @@
 
         function createIndicators() {
             const container = document.getElementById('indicators');
-            for (let i = 0; i < totalSlides; i++) {
+            for (let i = 0; i < totalSlides - 1; i++) { // 信件页不显示指示器
                 const dot = document.createElement('div');
                 dot.className = 'indicator' + (i === 0 ? ' active' : '');
                 dot.onclick = () => goToSlide(i);
@@ -766,9 +706,11 @@
                 else if (i === currentSlide) slide.classList.add('prev');
             });
 
-            document.querySelectorAll('.indicator').forEach((dot, i) => {
-                dot.classList.toggle('active', i === index);
-            });
+            if (index < totalSlides - 1) {
+                document.querySelectorAll('.indicator').forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+            }
 
             if (index === 1) {
                 setTimeout(() => animateValue('days-count', 0, 113, 2000), 300);
@@ -776,6 +718,21 @@
 
             currentSlide = index;
             setTimeout(() => { isAnimating = false; }, 800);
+        }
+
+        // 翻转卡片（仅用于前3个关键词）
+        function flipCard(card) {
+            card.classList.toggle('flipped');
+        }
+
+        // 跳转到信件页（仅如父如子）
+        function goToLetter() {
+            goToSlide(9);
+        }
+
+        // 返回关键词页
+        function backToKeywords() {
+            goToSlide(8);
         }
 
         function animateValue(id, start, end, duration) {
@@ -803,6 +760,7 @@
             
             let wheelTimer;
             document.addEventListener('wheel', (e) => {
+                if (currentSlide === 9) return;
                 e.preventDefault();
                 if (wheelTimer) return;
                 wheelTimer = setTimeout(() => {
@@ -813,6 +771,7 @@
             }, {passive: false});
             
             document.addEventListener('keydown', (e) => {
+                if (currentSlide === 9) return;
                 if (e.key === 'ArrowDown' || e.key === ' ') {
                     e.preventDefault();
                     goToSlide(currentSlide + 1);
@@ -825,6 +784,7 @@
         }
 
         function handleSwipe() {
+            if (currentSlide === 9) return;
             const diff = touchStartY - touchEndY;
             if (Math.abs(diff) > 50) {
                 if (diff > 0) goToSlide(currentSlide + 1);
