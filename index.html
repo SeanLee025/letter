@@ -267,6 +267,318 @@
             margin: 10px auto;
             border: 2px solid rgba(255,255,255,0.3);
         }
+        
+        /* 新增：异形照片样式 */
+        
+        /* 心形照片 */
+        .heart-photo {
+            width: 200px;
+            height: 180px;
+            margin: 15px auto;
+            filter: drop-shadow(0 8px 20px rgba(0,0,0,0.3));
+        }
+        .heart-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            clip-path: path('M100,30 C100,30 60,0 30,40 C0,80 40,120 100,180 C160,120 200,80 170,40 C140,0 100,30 100,30 Z');
+        }
+        
+        /* 圆形照片 */
+        .circle-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 10px auto;
+            border: 4px solid rgba(255,255,255,0.5);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+        
+        /* 六边形照片 */
+        .hex-photo {
+            width: 160px;
+            height: 180px;
+            margin: 10px auto;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            overflow: hidden;
+            filter: drop-shadow(0 8px 20px rgba(0,0,0,0.3));
+        }
+        .hex-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* 菱形照片 */
+        .diamond-photo {
+            width: 140px;
+            height: 140px;
+            margin: 20px auto;
+            transform: rotate(45deg);
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+        .diamond-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: rotate(-45deg) scale(1.42);
+        }
+        
+        /* 波浪边照片 */
+        .wave-photo {
+            width: 280px;
+            height: 160px;
+            margin: 15px auto;
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            overflow: hidden;
+            border: 3px solid rgba(255,255,255,0.4);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+        
+        /* 邮票样式照片 */
+        .stamp-photo {
+            width: 200px;
+            height: 240px;
+            margin: 15px auto;
+            background: white;
+            padding: 8px;
+            border-radius: 4px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        .stamp-photo::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 10px;
+            width: 15px;
+            height: 15px;
+            background: inherit;
+            border-radius: 50%;
+            box-shadow: 20px 0 0 inherit, 40px 0 0 inherit, 60px 0 0 inherit, 80px 0 0 inherit, 100px 0 0 inherit, 120px 0 0 inherit, 140px 0 0 inherit, 160px 0 0 inherit;
+        }
+        .stamp-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+        
+        /* 拍立得样式 */
+        .polaroid-photo {
+            width: 200px;
+            height: 240px;
+            background: white;
+            padding: 10px 10px 40px 10px;
+            margin: 15px auto;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            transform: rotate(-3deg);
+            transition: transform 0.3s;
+        }
+        .polaroid-photo:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+        .polaroid-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* 胶卷样式 */
+        .filmstrip {
+            display: flex;
+            gap: 10px;
+            padding: 15px 10px;
+            background: linear-gradient(to bottom, #222 0%, #000 20%, #000 80%, #222 100%);
+            margin: 15px 0;
+            overflow-x: auto;
+            max-width: 100%;
+        }
+        .filmstrip::-webkit-scrollbar { height: 4px; }
+        .filmstrip::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 2px; }
+        .film-frame {
+            flex-shrink: 0;
+            width: 100px;
+            height: 100px;
+            background: white;
+            padding: 4px;
+            border-left: 2px dashed rgba(255,255,255,0.3);
+            border-right: 2px dashed rgba(255,255,255,0.3);
+        }
+        .film-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* 照片墙网格 */
+        .photo-wall {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            width: 100%;
+            max-width: 340px;
+            margin: 15px auto;
+        }
+        .wall-item {
+            aspect-ratio: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .wall-item:nth-child(2) { transform: translateY(-10px); }
+        .wall-item:nth-child(4) { transform: translateY(5px); }
+        .wall-item:nth-child(6) { transform: translateY(-5px); }
+        
+        /* 悬浮照片组 */
+        .floating-photos {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            margin: 20px auto;
+        }
+        .float-photo {
+            position: absolute;
+            width: 120px;
+            height: 150px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 3px solid white;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+        .float-photo:nth-child(1) { left: 20px; top: 20px; transform: rotate(-10deg); animation-delay: 0s; z-index: 3; }
+        .float-photo:nth-child(2) { right: 20px; top: 10px; transform: rotate(8deg); animation-delay: 0.5s; z-index: 2; }
+        .float-photo:nth-child(3) { left: 50%; top: 40px; transform: translateX(-50%) rotate(3deg); animation-delay: 1s; z-index: 1; width: 100px; height: 130px; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+            50% { transform: translateY(-10px) rotate(var(--r, 0deg)); }
+        }
+        
+        /* 对角线照片布局 */
+        .diagonal-photos {
+            position: relative;
+            width: 320px;
+            height: 220px;
+            margin: 15px auto;
+        }
+        .diag-photo {
+            position: absolute;
+            width: 180px;
+            height: 120px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 3px solid rgba(255,255,255,0.5);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        .diag-photo:nth-child(1) { left: 0; top: 0; transform: rotate(-5deg); z-index: 2; }
+        .diag-photo:nth-child(2) { right: 0; bottom: 0; transform: rotate(5deg); z-index: 1; }
+        
+        /* 圆形环绕照片 */
+        .orbit-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 20px auto;
+        }
+        .center-photo {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid white;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+        .orbit-photo {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid rgba(255,255,255,0.8);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .orbit-photo:nth-child(2) { left: 50%; top: 0; transform: translateX(-50%); }
+        .orbit-photo:nth-child(3) { right: 0; top: 50%; transform: translateY(-50%); }
+        .orbit-photo:nth-child(4) { left: 50%; bottom: 0; transform: translateX(-50%); }
+        .orbit-photo:nth-child(5) { left: 0; top: 50%; transform: translateY(-50%); }
+        
+        /* 撕裂边缘照片 */
+        .torn-photo {
+            width: 260px;
+            height: 180px;
+            margin: 15px auto;
+            position: relative;
+            filter: drop-shadow(0 8px 20px rgba(0,0,0,0.3));
+        }
+        .torn-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            clip-path: polygon(0% 5%, 5% 0%, 15% 3%, 25% 0%, 35% 4%, 45% 0%, 55% 3%, 65% 0%, 75% 4%, 85% 0%, 95% 3%, 100% 5%, 98% 15%, 100% 25%, 97% 35%, 100% 45%, 98% 55%, 100% 65%, 97% 75%, 100% 85%, 98% 95%, 100% 100%, 95% 98%, 85% 100%, 75% 97%, 65% 100%, 55% 98%, 45% 100%, 35% 97%, 25% 100%, 15% 98%, 5% 100%, 0% 95%, 2% 85%, 0% 75%, 3% 65%, 0% 55%, 2% 45%, 0% 35%, 3% 25%, 0% 15%);
+        }
+        
+        /* 堆叠照片 */
+        .stack-photos {
+            position: relative;
+            width: 220px;
+            height: 280px;
+            margin: 20px auto;
+        }
+        .stack-photo {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 4px solid white;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            background: white;
+            transition: transform 0.3s;
+        }
+        .stack-photo:nth-child(1) { transform: rotate(-5deg) translateY(0); z-index: 3; }
+        .stack-photo:nth-child(2) { transform: rotate(3deg) translateY(10px); z-index: 2; }
+        .stack-photo:nth-child(3) { transform: rotate(-2deg) translateY(20px); z-index: 1; }
+        
+        /* 新增：照片轮播 */
+        .carousel {
+            width: 100%;
+            max-width: 340px;
+            height: 200px;
+            position: relative;
+            margin: 15px auto;
+            perspective: 1000px;
+        }
+        .carousel-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+        .carousel-item {
+            position: absolute;
+            width: 200px;
+            height: 150px;
+            left: 50%;
+            top: 50%;
+            margin-left: -100px;
+            margin-top: -75px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 3px solid white;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            transition: all 0.5s;
+        }
     </style>
 </head>
 <body>
@@ -275,12 +587,20 @@
 
         <!-- 第1页：封面 -->
         <section class="slide active" data-index="0">
-            <div class="handwriting" style="font-size: 22px; color: rgba(255,255,255,0.9); margin-bottom: 10px; margin-top: 50px; opacity: 0; animation: fadeInUp 1s forwards;">韦你 千千万万遍</div>
+            <div class="handwriting" style="font-size: 22px; color: rgba(255,255,255,0.9); margin-bottom: 10px; margin-top: 30px; opacity: 0; animation: fadeInUp 1s forwards;">韦你 千千万万遍</div>
             <h1 class="title-main" style="font-size: 38px;">我们的周年纪念</h1>
             <p class="subtitle" style="margin-top: 5px;">这一年，时光勾勒出我们的专属浪漫</p>
             
+            <!-- 主封面照片 -->
             <div class="cover-photo">
                 <img src="cover.jpg" alt="封面照片" class="photo-img" onerror="this.style.display='none'">
+            </div>
+            
+            <!-- 新增：底部小照片墙 -->
+            <div class="photo-wall" style="margin-top: 15px; max-width: 300px;">
+                <div class="wall-item"><img src="cover_wall1.jpg" alt="" onerror="this.style.display='none'"></div>
+                <div class="wall-item"><img src="cover_wall2.jpg" alt="" onerror="this.style.display='none'"></div>
+                <div class="wall-item"><img src="cover_wall3.jpg" alt="" onerror="this.style.display='none'"></div>
             </div>
             
             <div style="position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); color: white; font-size: 12px; opacity: 0.8; display: flex; flex-direction: column; align-items: center;">
@@ -293,8 +613,13 @@
         <section class="slide" data-index="1">
             <h2 class="title-main" style="margin-top: 10px;">「一见倾心·四季有痕」</h2>
             
-            <div class="number-big" id="days-count" style="margin-top: 20px;">0</div>
-            <div style="text-align: center; color: rgba(255,255,255,0.9); font-size: 14px; letter-spacing: 3px; margin-bottom: 20px;">天 · 触手可及</div>
+            <div class="number-big" id="days-count" style="margin-top: 10px;">0</div>
+            <div style="text-align: center; color: rgba(255,255,255,0.9); font-size: 14px; letter-spacing: 3px; margin-bottom: 15px;">天 · 触手可及</div>
+            
+            <!-- 新增：心形照片 -->
+            <div class="heart-photo">
+                <img src="stats_heart.jpg" alt="" onerror="this.style.display='none'">
+            </div>
             
             <div style="width: 100%; max-width: 340px;">
                 <div class="glass-card" style="animation-delay: 0.1s;">
@@ -312,28 +637,29 @@
                         每一次离别，都化作重逢的期待
                     </div>
                 </div>
-                
-                <div class="glass-card" style="animation-delay: 0.3s;">
-                    <div style="font-size: 15px; font-weight: 700; color: white; margin-bottom: 6px;">📏 此情可待</div>
-                    <div style="font-size: 13px; color: rgba(255,255,255,0.95); line-height: 1.6;">
-                        最长的分离 <span class="highlight">33天</span>相思在心口不断蔓延<br>
-                        最短间隔不过朝夕，昨日作别又明日相拥
-                    </div>
-                </div>
             </div>
             
             <!-- 填充照片 -->
-            <div class="fill-photo">
+            <div class="fill-photo" style="height: 100px;">
                 <img src="stats.jpg" alt="统计页照片" class="photo-img" onerror="this.style.display='none'">
             </div>
         </section>
 
         <!-- 第3页：足迹地图 -->
         <section class="slide" data-index="2">
-            <h2 class="title-main" style="margin-top: 10px;">「天涯海角·有你可赴」</h2>
-            <p class="subtitle" style="margin-bottom: 10px;">你我的缘分，散落在 <span class="highlight">11座城市</span> 的烟火里</p>
+            <h2 class="title-main" style="margin-top: 5px;">「天涯海角·有你可赴」</h2>
+            <p class="subtitle" style="margin-bottom: 5px;">你我的缘分，散落在 <span class="highlight">11座城市</span> 的烟火里</p>
             
-            <div class="map-photo">
+            <!-- 新增：胶卷照片条 -->
+            <div class="filmstrip">
+                <div class="film-frame"><img src="film1.jpg" alt="" onerror="this.style.display='none'"></div>
+                <div class="film-frame"><img src="film2.jpg" alt="" onerror="this.style.display='none'"></div>
+                <div class="film-frame"><img src="film3.jpg" alt="" onerror="this.style.display='none'"></div>
+                <div class="film-frame"><img src="film4.jpg" alt="" onerror="this.style.display='none'"></div>
+                <div class="film-frame"><img src="film5.jpg" alt="" onerror="this.style.display='none'"></div>
+            </div>
+            
+            <div class="map-photo" style="height: 180px;">
                 <img src="map.jpg" alt="足迹地图" class="photo-img" onerror="this.style.display='none'">
             </div>
             
@@ -341,7 +667,7 @@
                 武汉 · 郧西 · 襄阳 · 柳州 · 鄂州 · 黄石 · 钦州 · 大理 · 昆明 · 崇左 · 南宁 
             </div>
             
-            <div style="display: flex; gap: 12px; max-width: 340px; width: 100%; margin-top: 10px;">
+            <div style="display: flex; gap: 12px; max-width: 340px; width: 100%; margin-top: 5px;">
                 <div class="glass-card" style="flex: 1; text-align: center; padding: 12px; margin: 0;">
                     <div style="font-size: 22px; font-weight: 700; color: white;">1455km</div>
                     <div style="font-size: 11px; color: rgba(255,255,255,0.8); margin-top: 4px;">开封↔南宁</div>
@@ -351,17 +677,20 @@
                     <div style="font-size: 11px; color: rgba(255,255,255,0.8); margin-top: 4px;">武汉↔黄冈</div>
                 </div>
             </div>
-            
-            <!-- 填充照片 -->
-            <div class="fill-photo" style="margin-top: 12px;">
-                <img src="travel.jpg" alt="旅行照片" class="photo-img" onerror="this.style.display='none'">
-            </div>
         </section>
 
         <!-- 第4页：时光印记 -->
         <section class="slide" data-index="3">
             <h2 class="title-main" style="margin-top: 5px;">「时光印记·昼夜相伴」</h2>
-            <div style="width: 100%; max-width: 340px; margin-top: 15px;">
+            
+            <!-- 新增：悬浮照片组 -->
+            <div class="floating-photos">
+                <div class="float-photo"><img src="float1.jpg" alt="" onerror="this.style.display='none'"></div>
+                <div class="float-photo"><img src="float2.jpg" alt="" onerror="this.style.display='none'"></div>
+                <div class="float-photo"><img src="float3.jpg" alt="" onerror="this.style.display='none'"></div>
+            </div>
+            
+            <div style="width: 100%; max-width: 340px; margin-top: 10px;">
                 <div style="display: flex; align-items: center; margin-bottom: 12px; opacity: 0; animation: fadeInUp 0.6s 0.1s forwards;">
                     <div class="timeline-photo">
                         <img src="timeline1.jpg" alt="日出" class="photo-img" onerror="this.style.display='none'">
@@ -406,6 +735,11 @@
             <h2 class="title-main" style="margin-top: 5px; font-size: 26px;">「插科打诨·恋人絮语」</h2>
             <p class="subtitle" style="margin-bottom: 8px;">那些絮絮叨叨的日常，记录着被浸染的爱意</p>
             
+            <!-- 新增：六边形照片 -->
+            <div class="hex-photo">
+                <img src="chat_hex.jpg" alt="" onerror="this.style.display='none'">
+            </div>
+            
             <div style="width: 100%; max-width: 360px; margin-top: 5px;">
                 <div style="background: rgba(255,255,255,0.15); border-radius: 16px; padding: 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px;">
                     <div style="flex-shrink: 0;">
@@ -445,22 +779,29 @@
                         </div>
                     </div>
                 </div>
-                
-                <div style="background: rgba(255,255,255,0.25); border-radius: 12px; padding: 10px; text-align: center; border: 1px solid rgba(255,255,255,0.4);">
-                    <div style="font-size: 13px; color: white; font-weight: 600; font-family: 'Ma Shan Zheng', cursive; letter-spacing: 1px;">点点滴滴铺就心贴心的距离</div>
-                </div>
             </div>
             
             <!-- 填充照片 -->
-            <div class="fill-photo" style="margin-top: 10px;">
+            <div class="fill-photo" style="height: 100px; margin-top: 8px;">
                 <img src="chat.jpg" alt="聊天记录照片" class="photo-img" onerror="this.style.display='none'">
             </div>
         </section>
 
         <!-- 第6页：昵称与吵架 -->
         <section class="slide" data-index="5">
-            <div style="width: 100%; max-width: 350px; margin-top: 15px;">
-                <div class="glass-card" style="text-align: center; padding: 20px;">
+            <h2 class="title-main" style="margin-top: 5px; font-size: 24px;">「昵称与日常」</h2>
+            
+            <!-- 新增：圆形环绕照片 -->
+            <div class="orbit-container">
+                <div class="center-photo"><img src="orbit_center.jpg" alt="" onerror="this.style.display='none'"></div>
+                <div class="orbit-photo"><img src="orbit1.jpg" alt="" onerror="this.style.display='none'"></div>
+                <div class="orbit-photo"><img src="orbit2.jpg" alt="" onerror="this.style.display='none'"></div>
+                <div class="orbit-photo"><img src="orbit3.jpg" alt="" onerror="this.style.display='none'"></div>
+                <div class="orbit-photo"><img src="orbit4.jpg" alt="" onerror="this.style.display='none'"></div>
+            </div>
+            
+            <div style="width: 100%; max-width: 350px; margin-top: 10px;">
+                <div class="glass-card" style="text-align: center; padding: 15px;">
                     <div style="font-size: 18px; font-weight: 700; color: white; margin-bottom: 12px;">💌 专属昵称</div>
                     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; font-size: 13px; color: rgba(255,255,255,0.95);">
                         <span style="background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 20px;">木薯阳 13次</span>
@@ -473,7 +814,7 @@
                     </div>
                 </div>
                 
-                <div class="glass-card" style="background: rgba(255,255,255,0.15); margin-top: 12px; padding: 16px;">
+                <div class="glass-card" style="background: rgba(255,255,255,0.15); margin-top: 10px; padding: 14px;">
                     <div style="font-size: 17px; font-weight: 700; color: white; margin-bottom: 8px;">😤 小吵小闹·笨狗先哭</div>
                     <div style="font-size: 13px; color: rgba(255,255,255,0.95); line-height: 1.7;">
                         这一年共惹你生气 <span class="highlight">6次</span><br>
@@ -483,7 +824,7 @@
                 </div>
                 
                 <!-- 昵称页照片 -->
-                <div class="nickname-photo">
+                <div class="nickname-photo" style="height: 120px; margin-top: 10px;">
                     <img src="nickname.jpg" alt="昵称页照片" class="photo-img" onerror="this.style.display='none'">
                 </div>
             </div>
@@ -494,12 +835,13 @@
             <h2 class="title-main" style="margin-bottom: 5px; font-size: 24px;">✨ 惊喜瞬间·温柔暴击</h2>
             <p class="subtitle" style="margin-bottom: 8px; font-size: 12px;">你说自己浪漫绝缘，却为我准备了千万次惊喜</p>
             
-            <!-- 顶部照片填充 -->
-            <div class="surprise-top-photo">
-                <img src="surprise.jpg" alt="惊喜瞬间" class="photo-img" onerror="this.style.display='none'">
+            <!-- 新增：对角线照片 -->
+            <div class="diagonal-photos">
+                <div class="diag-photo"><img src="diag1.jpg" alt="" onerror="this.style.display='none'"></div>
+                <div class="diag-photo"><img src="diag2.jpg" alt="" onerror="this.style.display='none'"></div>
             </div>
             
-            <div class="surprise-grid">
+            <div class="surprise-grid" style="margin-top: 10px;">
                 <div class="surprise-item"><div class="surprise-date">2月12日 · 元宵节</div><div class="surprise-text">我难过情人节不能相聚，你却说元宵才是中国人的情人节</div></div>
                 <div class="surprise-item"><div class="surprise-date">4月25日 · 倾心</div><div class="surprise-text">最心疼的爱意，是你7小时的硬座无敌铁腚</div></div>
                 <div class="surprise-item"><div class="surprise-date">5月20日 · 520</div><div class="surprise-text">本以为歌单是礼物，却发现家里还藏着真人惊喜</div></div>
@@ -513,19 +855,23 @@
         </section>
 
         <!-- 第8页：年度金曲 -->
-        <section class="slide" data-index="7">
-            <h2 class="title-main" style="margin-top: 15px;">「年度金曲·独家记忆」</h2>
-            
-            <div style="width: 180px; height: 180px; border-radius: 12px; overflow: hidden; margin: 20px auto; box-shadow: 0 10px 40px rgba(0,0,0,0.3); border: 3px solid rgba(255,255,255,0.3);">
-                <img src="album.jpg" alt="行走的鱼专辑封面" class="photo-img" style="border-radius: 12px;" onerror="this.style.display='none'">
+         <section class="slide" data-index="7">
+            <div class="sticker circle" style="top: 100px; left: 20px; width: 70px; height: 70px; z-index: 5;">
+               <img src="album.jpg" alt="行走的鱼专辑封面" class="photo-img" style="border-radius: 12px;" onerror="this.style.display='none'">
             </div>
             
-            <div style="text-align: center; color: white; margin-bottom: 20px;">
-                <div style="font-size: 22px; font-weight: 700; margin-bottom: 6px;">《行走的鱼》</div>
-                <div style="font-size: 13px; opacity: 0.9; line-height: 1.6;">
-                    "我偏爱 你的黑 你的笨 你的错"<br>
-                    3月7日11点 · 郧西江边的晚风
+            <h2 class="title-main" style="margin-top: 30px;">「年度金曲·独家记忆」</h2>
+            
+            <div style="width: 160px; height: 160px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 25px auto; border: 3px solid rgba(255,255,255,0.4); box-shadow: 0 0 30px rgba(255,255,255,0.2);">
+                <div style="width: 140px; height: 140px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                    <span style="font-size: 32px;">🎵</span>
+                    <span style="color: white; font-size: 10px; margin-top: 8px;">正在播放</span>
                 </div>
+            </div>
+            
+            <div style="text-align: center; color: white; margin-bottom: 25px;">
+                <div style="font-size: 24px; font-weight: 700; margin-bottom: 6px;">《行走的鱼》</div>
+                <div style="font-size: 13px; opacity: 0.9;">我偏爱 你的黑 你的笨 你的错</div>
             </div>
             
             <div class="glass-card" style="max-width: 340px;">
@@ -536,24 +882,19 @@
                     是藏在空气的惊喜<br><br>
                     是无趣的家里<br>
                     充满生机与爱意<br>
-                    向前，是义无反顾<br>
-                    向后，是无尽温柔
+向前，是义无反顾<br>
+向后，是无尽温柔
                 </div>
-            </div>
-            
-            <!-- 填充照片 -->
-            <div class="fill-photo" style="margin-top: 12px;">
-                <img src="music.jpg" alt="音乐相关照片" class="photo-img" onerror="this.style.display='none'">
             </div>
         </section>
 
-        <!-- 第9页：年度关键词 -->
+           <!-- 第9页：年度关键词（3个翻转照片 + 1个跳转信件） -->
         <section class="slide" data-index="8">
-            <h2 class="title-main" style="margin-top: 15px;">年度关键词</h2>
-            <p class="subtitle" style="margin-bottom: 12px;">点击卡片，解锁专属记忆</p>
+            <h2 class="title-main" style="margin-top: 20px;">年度关键词</h2>
+            <p class="subtitle" style="margin-bottom: 15px;">点击卡片，解锁专属记忆</p>
             
             <div class="keyword-grid">
-                <!-- 人生导师 -->
+                <!-- 人生导师 - 翻转显示照片 -->
                 <div class="flip-card" onclick="flipCard(this)">
                     <div class="flip-face flip-front">
                         <div class="keyword-icon">👨‍🏫</div>
@@ -561,20 +902,21 @@
                         <div class="keyword-hint">点击查看 →</div>
                     </div>
                     <div class="flip-face flip-back">
-                        <img src="keyword1.jpg" alt="人生导师" class="photo-img" onerror="this.style.display='none'">
+                        <div class="photo-fill">
+                            <div class="photo-placeholder" style="background: #f0f0f0; color: #999;">替换照片<br>人生导师<br>1:1</div>
+                        </div>
                     </div>
                 </div>
                 
-                <!-- 如父如子 -->
+                <!-- 如父如子 - 翻转显示照片 -->
                 <div class="flip-card" onclick="goToLetter()">
-                    <div class="flip-face flip-front" style="background: rgba(255,215,0,0.25); border-color: rgba(255,215,0,0.5);">
+                   <div class="flip-face flip-front">
                         <div class="keyword-icon">👨‍👦</div>
                         <div class="keyword-text">如父如子</div>
-                        <div class="keyword-hint" style="color: rgba(255,255,200,0.9);">💌 点击开启信件</div>
+                          <div class="keyword-hint">点击查看 →</div>
                     </div>
                 </div>
                 
-            
                 <!-- 赌王速成 - 翻转显示照片 -->
                 <div class="flip-card" onclick="flipCard(this)">
                     <div class="flip-face flip-front">
@@ -583,7 +925,8 @@
                         <div class="keyword-hint">点击查看 →</div>
                     </div>
                     <div class="flip-face flip-back">
-                         <img src="keyword2.jpg" alt="赌王速成" class="photo-img" onerror="this.style.display='none'">
+                        <div class="photo-fill">
+                            <div class="photo-placeholder" style="background: #f0f0f0; color: #999;">替换照片<br>赌王速成<br>1:1</div>
                         </div>
                     </div>
                 </div>
@@ -596,7 +939,8 @@
                         <div class="keyword-hint">点击查看 →</div>
                     </div>
                     <div class="flip-face flip-back">
-                         <img src="keyword3.jpg" alt="江山美人" class="photo-img" onerror="this.style.display='none'">
+                        <div class="photo-fill">
+                            <div class="photo-placeholder" style="background: #f0f0f0; color: #999;">替换照片<br>江山美人<br>1:1</div>
                         </div>
                     </div>
                 </div>
@@ -607,11 +951,17 @@
             </div>
         </section>
 
-        <!-- 第10页：给韦的一封信（仅如父如子跳转） -->
+
+        <!-- 第10页：给韦的一封信 -->
         <section class="slide" data-index="9">
             <button class="back-btn" onclick="backToKeywords()">← 返回关键词</button>
             
             <h2 class="title-main" style="margin-top: 0px; font-size: 24px;">💌 致我最亲爱的韦</h2>
+            
+            <!-- 新增：邮票照片 -->
+            <div class="stamp-photo" style="position: absolute; right: 20px; top: 60px; width: 80px; height: 100px; z-index: 5;">
+                <img src="stamp.jpg" alt="" onerror="this.style.display='none'">
+            </div>
             
             <div class="letter-container">
                 <div class="letter-content">
@@ -621,25 +971,33 @@
                     从人生道理的侃侃而谈，到生活琐事的细心打理，<br>
                     你总是像一位人生导师，在我迷茫时指点迷津。<br><br>
                     
-                    <div class="letter-photo">插入：导师/教导瞬间照片<br>建议 16:9 横版</div>
+                    <div class="letter-photo">
+                        <img src="letter1.jpg" alt="" class="photo-img" onerror="this.style.display='none'">
+                    </div>
                     
                     而我最感动的，是你如父如子的照顾。<br>
                     那些被细心呵护的瞬间，那些无声的包容，<br>
                     让我明白，原来被爱是这样的感觉。<br><br>
                     
-                    <div class="letter-photo">插入：温馨日常/照顾照片<br>建议 16:9 横版</div>
+                    <div class="letter-photo">
+                        <img src="letter2.jpg" alt="" class="photo-img" onerror="this.style.display='none'">
+                    </div>
                     
                     还记得我们一起练成的"赌王速成"吗？<br>
                     虽然你总说我是小菜鸟，但每次输给我时眼里的笑意，<br>
                     比赢牌更让人心动。<br><br>
                     
-                    <div class="letter-photo">插入：娱乐/游戏照片<br>建议 16:9 横版</div>
+                    <div class="letter-photo">
+                        <img src="letter3.jpg" alt="" class="photo-img" onerror="this.style.display='none'">
+                    </div>
                     
                     至于"江山美人"，我想告诉你——<br>
                     我不要江山，我只要你。<br>
                     你就是我的万里山河，我的星河滚烫。<br><br>
                     
-                    <div class="letter-photo">插入：合照/定情照<br>建议 16:9 横版</div>
+                    <div class="letter-photo">
+                        <img src="letter4.jpg" alt="" class="photo-img" onerror="this.style.display='none'">
+                    </div>
                     
                     一年很短，但我们的故事还很长。<br>
                     愿余生每一个春夏秋冬，都有你在身旁。<br><br>
@@ -671,7 +1029,7 @@
 
         function createIndicators() {
             const container = document.getElementById('indicators');
-            for (let i = 0; i < totalSlides - 1; i++) { // 信件页不显示指示器
+            for (let i = 0; i < totalSlides - 1; i++) {
                 const dot = document.createElement('div');
                 dot.className = 'indicator' + (i === 0 ? ' active' : '');
                 dot.onclick = () => goToSlide(i);
@@ -703,17 +1061,14 @@
             setTimeout(() => { isAnimating = false; }, 800);
         }
 
-        // 翻转卡片（仅用于前3个关键词）
         function flipCard(card) {
             card.classList.toggle('flipped');
         }
 
-        // 跳转到信件页（仅如父如子）
         function goToLetter() {
             goToSlide(9);
         }
 
-        // 返回关键词页
         function backToKeywords() {
             goToSlide(8);
         }
